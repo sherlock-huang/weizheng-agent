@@ -20,14 +20,29 @@ WEIZHENG_SERVER_PORT = 7788
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 
 
-def check_trigger(text: str) -> tuple[bool, str]:
+def check_trigger(text: str) -> tuple[bool, str, str]:
     """
     检查是否触发魏征
     
     Returns:
-        (是否触发, 提取的内容)
+        (是否触发, 触发类型, 提取的内容)
+        触发类型: "ask" (询问) | "exit" (退下)
     """
-    triggers = [
+    text_lower = text.lower()
+    
+    # 检查"退下"指令（优先级最高）
+    exit_triggers = [
+        "魏征，退下",
+        "魏征退下",
+        "退下吧魏征",
+        "魏征，下去吧",
+    ]
+    for trigger in exit_triggers:
+        if trigger in text_lower:
+            return True, "exit", ""
+    
+    # 检查正常触发词
+    ask_triggers = [
         "魏征，你怎么看",
         "魏征，有何高见",
         "魏征，说说你的看法",
@@ -37,17 +52,38 @@ def check_trigger(text: str) -> tuple[bool, str]:
         "weizheng, what do you think",
     ]
     
-    text_lower = text.lower()
-    
-    for trigger in triggers:
+    for trigger in ask_triggers:
         if trigger in text_lower:
             # 提取触发词后的内容
             idx = text_lower.find(trigger)
             content = text[idx + len(trigger):].strip()
             content = content.strip('？?。.,')
-            return True, content
+            return True, "ask", content
     
-    return False, ""
+    return False, "", ""
+
+
+def say_goodbye() -> dict:
+    """
+    魏征告退 - 显示"微臣告退..." 3秒后自动停止
+    
+    Returns:
+        操作结果
+    """
+    import threading
+    import time
+    
+    # 显示告退消息
+    result = trigger_talk(message="微臣告退...")
+    
+    # 3秒后自动停止
+    def auto_stop():
+        time.sleep(3)
+        stop_talk()
+    
+    threading.Thread(target=auto_stop, daemon=True).start()
+    
+    return result
 
 
 def trigger_talk(message: str = "陛下！臣有话说！", messages: list = None) -> dict:
@@ -130,10 +166,21 @@ def on_user_message(message: str, context: dict) -> dict:
     Returns:
         如果需要处理，返回处理结果
     """
-    triggered, content = check_trigger(message)
+    triggered, trigger_type, content = check_trigger(message)
     
     if not triggered:
         return {"handled": False}
+    
+    # 处理"退下"指令
+    if trigger_type == "exit":
+        talk_result = say_goodbye()
+        return {
+            "handled": True,
+            "triggered": True,
+            "type": "exit",
+            "response": "微臣告退...",
+            "talk_result": talk_result
+        }
     
     # 准备多句话轮播（魏征开始思考的提示语）
     thinking_messages = [
@@ -150,6 +197,7 @@ def on_user_message(message: str, context: dict) -> dict:
     return {
         "handled": True,
         "triggered": True,
+        "type": "ask",
         "content": content,
         "talk_result": talk_result
     }
