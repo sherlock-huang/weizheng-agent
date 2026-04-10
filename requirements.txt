@@ -1,0 +1,40 @@
+# 魏征 Agent 依赖
+
+# 基础依赖（必需）
+# Python 3.8+
+
+# GUI和图像处理（像素魏征动画所需）
+Pillow>=9.0.0
+
+# 大模型API调用
+requests>=2.28.0
+
+# 可选依赖 - 飞书服务器（生产环境）
+# flask>=2.0.0
+# gunicorn>=20.0.0
+
+# 可选依赖 - 向量搜索（用于高级记忆检索）
+# numpy>=1.20.0
+# scikit-learn>=1.0.0
+
+# 可选依赖 - 向量搜索（用于高级记忆检索）
+# numpy>=1.20.0
+# scikit-learn>=1.0.0
+
+# 可选依赖 - 高级NLP（用于更智能的内容分析）
+# 如果需要接入LLM API进行真正的智能分析，需要:
+# openai>=1.0.0  # OpenAI API
+# anthropic>=0.8.0  # Claude API
+# requests>=2.28.0  # 通用HTTP请求
+
+# 开发依赖
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=5.0.0
+# mypy>=1.0.0
+
+# 注意：当前版本使用模拟的批判逻辑
+# 要启用真正的AI分析，需要：
+# 1. 配置LLM API密钥
+# 2. 安装对应的SDK
+# 3. 修改 src/core/critic.py 中的 _should_flag_issue 方法

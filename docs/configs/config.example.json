@@ -1,0 +1,34 @@
+{
+  "_comment": "魏征 Agent 配置文件示例 - 复制为 config.json 并填入真实值",
+  
+  "llm": {
+    "provider": "moonshot",
+    "api_key": "your-moonshot-api-key-here",
+    "model": "moonshot-v1-8k",
+    "base_url": null,
+    "temperature": 0.7,
+    "max_tokens": 2000
+  },
+  
+  "openclaw": {
+    "workspace_path": "~/.openclaw/workspace",
+    "current_project": "default",
+    "auto_sync": true
+  },
+  
+  "feishu": {
+    "enabled": false,
+    "app_id": "cli_xxxxxxxxxx",
+    "app_secret": "xxxxxxxxxx",
+    "encrypt_key": "",
+    "verification_token": "",
+    "webhook_url": ""
+  },
+  
+  "weizheng": {
+    "default_intensity": "medium",
+    "size": 140,
+    "show_bubble": true,
+    "bubble_duration": 3.0
+  }
+}
