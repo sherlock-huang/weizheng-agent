@@ -78,10 +78,17 @@ def say_goodbye() -> dict:
     
     # 3秒后自动停止
     def auto_stop():
-        time.sleep(3)
-        stop_talk()
+        try:
+            time.sleep(3)
+            stop_talk()
+            print("[魏征] 已自动停止（告退）")
+        except Exception as e:
+            print(f"[魏征] 自动停止出错: {e}")
     
-    threading.Thread(target=auto_stop, daemon=True).start()
+    # 启动后台线程
+    stop_thread = threading.Thread(target=auto_stop)
+    stop_thread.daemon = True
+    stop_thread.start()
     
     return result
 
