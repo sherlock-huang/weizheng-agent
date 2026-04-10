@@ -281,6 +281,23 @@ netstat -ano | findstr 7788
 - Pillow (`pip install Pillow`)
 - 可选：pystray (`pip install pystray`)
 
+## 贡献与反馈
+
+欢迎分享、引用与改进。
+
+- 发现问题：欢迎提交 [Issue](https://github.com/sherlock-huang/weizheng-agent/issues)
+- 有改进建议：欢迎提交 [Pull Request](https://github.com/sherlock-huang/weizheng-agent/pulls)
+
+## 相关链接
+
+- 主站博客：https://kunpeng-ai.com
+- GitHub 组织：https://github.com/kunpeng-ai-research
+- OpenClaw 官方：https://openclaw.ai
+
+## 维护与署名
+
+- 维护者：鲲鹏AI探索局
+
 ## 许可证
 
 MIT License
@@ -288,5 +305,3 @@ MIT License
 ---
 
 **兼听则明，偏信则暗** - 魏征
-
-> 欢迎在 GitHub 提交 Issue 和 PR！
